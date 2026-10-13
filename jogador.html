@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#17382f">
+    <title>App do Jogador | Cartinhas Digitais</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body data-app-mode="player">
+    <div id="app-container" aria-live="polite"></div>
+    <script>
+        if (location.protocol !== "file:") {
+            document.getElementById("app-container").innerHTML = `
+                <section class="portal-screen">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h3>App exclusivo para Android</h3>
+                                <p class="small">O jogador acessa suas cartas apenas pelo aplicativo instalado. O sistema web é reservado ao painel administrativo.</p>
+                            </div>
+                        </div>
+                        <a class="ghost-button link-button" href="index.html">Voltar</a>
+                    </div>
+                </section>
+            `;
+        } else {
+            ["supabase-config.js", "app.js"].forEach((src) => {
+                const script = document.createElement("script");
+                script.src = src;
+                script.async = false;
+                document.body.appendChild(script);
+            });
+        }
+
+        if (location.protocol !== "file:" && "serviceWorker" in navigator) {
+            navigator.serviceWorker.register("sw.js").catch(console.warn);
+        }
+    </script>
+</body>
+</html>

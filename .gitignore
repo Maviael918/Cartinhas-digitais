@@ -1,0 +1,14 @@
+server.out.log
+server.err.log
+
+android-player/build/*
+!android-player/build/cartinhas-player-debug.apk
+
+android-player/build/classes/
+android-player/build/compiled/
+android-player/build/dex/
+android-player/build/generated/
+android-player/build/*.idsig
+android-player/build/*-unsigned.apk
+android-player/build/*-aligned.apk
+android-player/build/debug.keystore
