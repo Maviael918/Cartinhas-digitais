@@ -16,7 +16,7 @@ O arquivo já define `RACKER_STORAGE=supabase`, para exigir o banco online. Depo
 
 O arquivo `.env` é privado e fica fora do Git. No site do Netlify, abra **Project configuration → Environment variables** e importe o `.env`, ou cadastre as variáveis acima manualmente. Os valores precisam estar disponíveis para **Functions** no ambiente de produção. Depois, faça um novo deploy.
 
-`HOST` e `PORT` são usados no computador; não são necessários nas Functions. O Android recebe somente o endereço do servidor e o código de pareamento.
+`HOST` e `PORT` são usados no computador; não são necessários nas Functions. O Android já vem com o endereço do painel definido em `config/deployment.json` na compilação; o usuário informa apenas o código de pareamento e confirma o compartilhamento. As chaves do Supabase ficam somente no servidor.
 
 ## Banco de dados
 

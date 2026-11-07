@@ -8,6 +8,7 @@ O **`index.html` está na raiz**, junto de `app.js` e `styles.css`. O projeto an
 
 ```text
 index.html                 Entrada do painel web
+.env                       Chave privada Supabase e senha do painel (fora do Git)
 app.js                     Interface e chamadas à API
 styles.css                 Estilos
 server.mjs                 Servidor local
@@ -34,6 +35,8 @@ npm start
 Abra **http://127.0.0.1:3000** e use a senha exibida no terminal. No Windows, `ABRIR-PAINEL.cmd` abre um servidor ativo ou inicia um novo e mostra a senha. Mantenha o terminal do servidor aberto.
 
 Abrir `index.html` diretamente permite ver a orientação de acesso, mas o painel real precisa da API. O Live Server não executa essa API. Sem `ADMIN_PASSWORD`, cada inicialização gera uma senha temporária. Para manter sua senha, defina a variável no ambiente ou em `.env`, com 12 a 256 caracteres. Use `.env.example` como modelo; `.env` não é versionado.
+
+O arquivo privado **[.env](.env)** já foi criado para você preencher `SUPABASE_SECRET_KEY` e `ADMIN_PASSWORD`. Ele define `RACKER_STORAGE=supabase`; preencha os valores antes de reiniciar o servidor. Veja [as instruções dos campos](supabase/README.md). Para a versão publicada, importe essas variáveis no ambiente privado do Netlify e realize um novo deploy.
 
 ## Supabase e Netlify
 
@@ -63,15 +66,15 @@ Requer Android 11 ou superior. Para recompilar, use Android Studio, JDK 17, SDK 
 
 1. Instale o APK no seu Android.
 2. Entre no painel e escolha **Conectar aparelho**.
-3. No app, informe a origem HTTPS do servidor, o código de oito dígitos e o nome do aparelho.
-4. Confirme o compartilhamento e toque em **Sincronizar agora**.
+3. Abra o app atualizado (0.3.0), informe somente o código de oito dígitos e o nome do aparelho. O endereço do painel já vem configurado.
+4. Confirme o compartilhamento e toque em **Conectar meu Android**. O primeiro envio é automático e o painel seleciona o novo aparelho em poucos segundos. Depois, use **Sincronizar agora** quando quiser.
 5. Para enviar a localização aproximada, marque a opção de envio manual e autorize a permissão do Android.
 
-O endereço do servidor é configurado no app e pode ser trocado sem recompilar o APK. Após mudar do arquivo local para Supabase, faça um novo pareamento; vínculos antigos não são importados automaticamente.
+O APK lê o endereço de `config/deployment.json` (`siteUrl`) durante a compilação. A versão atual conecta diretamente a `https://cartinhas01.netlify.app`; não há campo para digitar servidor nem chave Supabase no aplicativo. Para mudar de hospedagem, altere esse arquivo e recompile o APK. Um vínculo da versão anterior com o mesmo servidor é preservado. Vínculos com outro servidor, inclusive local, precisam de um novo pareamento; dados antigos não são importados automaticamente.
 
-Na versão 0.2.0 do app, use **Testar conexão com o servidor** antes de parear. O teste verifica a identificação da API e mostra o armazenamento informado pelo servidor. A tela mantém os campos preenchidos quando você alterna para o navegador para buscar o código. O app só registra sucesso de sincronização após receber a confirmação da API.
+O botão **Testar conexão com o servidor** é opcional e verifica a API já configurada, mostrando o armazenamento informado pelo servidor. A tela mantém os campos preenchidos quando você alterna para o navegador para buscar o código. O app só registra sucesso de sincronização após receber a confirmação da API. Durante o pareamento, o painel consulta novos aparelhos a cada três segundos; fora dele, atualiza a cada quinze segundos enquanto estiver visível.
 
-No desenvolvimento em rede local, o telefone precisa alcançar o IP privado do computador. `127.0.0.1` no telefone aponta para o próprio telefone. O servidor padrão aceita somente conexões locais; configure `HOST` para testes na rede. HTTP local é permitido apenas no APK de debug. Uma instalação real usa HTTPS com certificado válido. O projeto não altera o firewall.
+Instalar o APK não inicia os envios por conta própria: abra o app e confirme o pareamento no primeiro uso. A localização continua opcional, com permissão do Android e envio manual. O painel local continua disponível para desenvolvimento; o APK distribuído usa o painel online por HTTPS.
 
 ## Dados e compartilhamento
 

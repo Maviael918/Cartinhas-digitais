@@ -36,7 +36,11 @@ public class MainActivity extends Activity {
     private Button syncButton;
     private static final String WORK = "racker-periodic";
 
-    @Override public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); prefs = Telemetry.prefs(this); draw(); }
+    @Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState); prefs = Telemetry.prefs(this);
+        if (Telemetry.resetDifferentServer(this)) WorkManager.getInstance(this).cancelUniqueWork(WORK);
+        draw();
+    }
     @Override public void onResume() {
         super.onResume(); visible = true;
         boolean paired=!prefs.getString("token", "").isEmpty();
@@ -67,12 +71,12 @@ public class MainActivity extends Activity {
     }
     private void pairingScreen() {
         text("Conectar ao painel", 19, "#405D30");
-        text("Gere um código no painel web. Informe a URL do seu servidor Racker, não a URL da demonstração.", 13, "#879577");
-        EditText url = input("https://racker.seudominio.com", prefs.getString("url", ""), InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_URI);
-        TextView serverStatus=text("Teste o endereço antes de informar o código de pareamento.",12,"#879577");
+        text("O servidor já está configurado. Abra seu painel, toque em Conectar aparelho e informe somente o código abaixo.", 13, "#879577");
+        text("Seu painel: "+BuildConfig.RACKER_SERVER_URL,12,"#879577");
+        TextView serverStatus=text("Após sua confirmação, o aparelho aparecerá automaticamente no painel.",12,"#879577");
         button("Testar conexão com o servidor", v -> {
             String address;
-            try { address=Telemetry.validateUrl(url.getText().toString()); } catch(Exception e) { message(e.getMessage());return; }
+            try { address=Telemetry.validateUrl(BuildConfig.RACKER_SERVER_URL); } catch(Exception e) { message(e.getMessage());return; }
             v.setEnabled(false);
             io.execute(() -> {
                 try { JSONObject health=Telemetry.checkServer(address);runOnUiThread(() -> { v.setEnabled(true);serverStatus.setTextColor(Color.parseColor("#60833D"));serverStatus.setText("Servidor Racker conectado. Banco: "+health.optString("storage","não informado")); }); }
@@ -85,7 +89,7 @@ public class MainActivity extends Activity {
         button("Conectar meu Android", v -> {
             if (!consent.isChecked()) { message("Confirme o compartilhamento antes de conectar."); return; }
             String address;
-            try { address = Telemetry.validateUrl(url.getText().toString()); } catch(Exception e) { message(e.getMessage()); return; }
+            try { address = Telemetry.validateUrl(BuildConfig.RACKER_SERVER_URL); } catch(Exception e) { message(e.getMessage()); return; }
             String pairingCode=code.getText().toString().trim(), deviceName=name.getText().toString().trim();
             if(!pairingCode.matches("[0-9]{8}") || deviceName.isEmpty()) { message("Informe o código de 8 dígitos e o nome do aparelho."); return; }
             v.setEnabled(false);

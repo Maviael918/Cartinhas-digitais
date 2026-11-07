@@ -22,6 +22,15 @@ import javax.net.ssl.SSLHandshakeException;
 final class Telemetry {
     static SharedPreferences prefs(Context c) { return c.getSharedPreferences("racker", Context.MODE_PRIVATE); }
 
+    static boolean resetDifferentServer(Context c) {
+        SharedPreferences p = prefs(c);
+        if (p.getString("token", "").isEmpty()) return false;
+        String previous = p.getString("url", "").replaceAll("/+$", "");
+        if (BuildConfig.RACKER_SERVER_URL.equals(previous)) return false;
+        p.edit().clear().putString("error", "O painel desta versão já está configurado. Faça um novo pareamento para autorizar o envio ao painel online.").commit();
+        return true;
+    }
+
     static String validateUrl(String value) throws Exception {
         URI uri = new URI(value.trim());
         String host = uri.getHost();
@@ -113,13 +122,14 @@ final class Telemetry {
     }
 
     static boolean send(Context c, JSONObject location) throws Exception {
+        if (resetDifferentServer(c)) return false;
         SharedPreferences p = prefs(c);
         if (!p.getBoolean("active", false) || p.getString("token", "").isEmpty()) return false;
         JSONObject body = collect(c);
         if (location != null) body.put("location", location);
         if (!p.getBoolean("active", false)) return false;
         try {
-            JSONObject ack=post(p.getString("url", ""), "/api/telemetry", body, p.getString("token", ""));
+            JSONObject ack=post(BuildConfig.RACKER_SERVER_URL, "/api/telemetry", body, p.getString("token", ""));
             if(!ack.optBoolean("ok",false) || ack.optLong("receivedAt",0)<=0)throw new Exception("O servidor não confirmou o recebimento. Nenhuma sincronização foi registrada no aplicativo.");
             p.edit().putLong("lastSync", System.currentTimeMillis()).remove("error").apply();
             return true;
