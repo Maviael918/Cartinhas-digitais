@@ -1,0 +1,5 @@
+{
+  "provider": "netlify",
+  "siteUrl": "https://cartinhas01.netlify.app",
+  "supabaseUrl": "https://yadzaradfcojbrxpdahk.supabase.co"
+}
