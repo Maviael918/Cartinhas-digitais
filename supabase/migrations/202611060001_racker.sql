@@ -87,8 +87,9 @@ create or replace function public.racker_create_pairing(p_hash text, p_expires b
 returns void language plpgsql security invoker set search_path = '' as $$
 begin
   perform pg_catalog.pg_advisory_xact_lock(723164901);
-  delete from public.racker_pairing_codes;
-  insert into public.racker_pairing_codes(code_hash, expires_at) values (p_hash, p_expires);
+  delete from public.racker_pairing_codes where code_hash <> p_hash;
+  insert into public.racker_pairing_codes(code_hash, expires_at) values (p_hash, p_expires)
+  on conflict (code_hash) do update set expires_at = excluded.expires_at;
 end;
 $$;
 create or replace function public.racker_pair_device(p_hash text, p_device jsonb, p_now bigint)

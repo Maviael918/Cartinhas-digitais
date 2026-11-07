@@ -3,8 +3,10 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
 import {createNetlifyHandler} from '../lib/netlify-handler.mjs';
+import {createSupabaseStore} from '../lib/supabase-store.mjs';
 
 const migration = readFileSync(new URL('../supabase/migrations/202611060001_racker.sql', import.meta.url), 'utf8');
+const pairingFix = readFileSync(new URL('../supabase/migrations/202611070001_fix_pairing_safeupdate.sql', import.meta.url), 'utf8');
 
 test('Supabase e Netlify: persistência, isolamento e revogação entre instâncias', async t => {
   const db = await PGlite.create();
@@ -51,6 +53,8 @@ test('Supabase e Netlify: persistência, isolamento e revogação entre instânc
     await t.test('migração é aditiva e pode ser aplicada novamente',async()=>{
       await db.exec(migration);
       await db.exec(migration);
+      await db.exec(pairingFix);
+      await db.exec(pairingFix);
       assert.equal((await db.query('select title from public.unrelated_records')).rows[0].title,'Registro independente');
       const funcs=await db.query("select prosecdef, proconfig from pg_proc where proname like 'racker_%'");
       assert.equal(funcs.rows.length,10);
@@ -67,6 +71,16 @@ test('Supabase e Netlify: persistência, isolamento e revogação entre instânc
         await db.exec('reset role');
       }
       await db.exec('set role service_role');
+    });
+    await t.test('trocar o código invalida o anterior e repetir o mesmo hash atualiza sua validade',async()=>{
+      const first='a'.repeat(64),second='b'.repeat(64);
+      await db.query('select public.racker_create_pairing($1,$2)',[first,clock+1000]);
+      await db.query('select public.racker_create_pairing($1,$2)',[second,clock+2000]);
+      let rows=(await db.query('select code_hash,expires_at from public.racker_pairing_codes')).rows;
+      assert.equal(rows.length,1);assert.equal(rows[0].code_hash,second);
+      await db.query('select public.racker_create_pairing($1,$2)',[second,clock+3000]);
+      rows=(await db.query('select code_hash,expires_at from public.racker_pairing_codes')).rows;
+      assert.equal(rows.length,1);assert.equal(Number(rows[0].expires_at),clock+3000);
     });
     await t.test('login persiste entre cold starts e usa cookie seguro',async()=>{
       const health=await call(a,'/health');
@@ -174,4 +188,14 @@ test('saúde não indica conexão bem-sucedida quando o Supabase falha',async()=
   const body=await response.json();
   assert.ok(!body.ok);
   assert.ok(!JSON.stringify(body).includes('detalhe privado'));
+});
+
+test('proteção safe-update no pareamento pede a atualização SQL sem expor detalhes privados',async()=>{
+  const store=createSupabaseStore({url:'https://test.supabase.co',secretKey:'sb_secret_only_for_local_tests',fetchImpl:async()=>Response.json({code:'21000',message:'DELETE requires a WHERE clause',details:'private database detail'},{status:400})});
+  await assert.rejects(store.createPairing('a'.repeat(64),Date.now()+300000),error=>{
+    assert.equal(error.code,'PAIRING_DATABASE_UPDATE_REQUIRED');
+    assert.equal(error.status,503);
+    assert.ok(!error.message.includes('private database detail'));
+    return true;
+  });
 });
