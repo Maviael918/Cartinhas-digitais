@@ -156,7 +156,12 @@ test('Netlify não inicia com credenciais públicas ou configuração ausente',a
   const fetchImpl=async()=>{calls++;throw new Error('Não deveria acessar a rede.');};
   for(const env of [{},{ADMIN_PASSWORD:'senha-123456789',SUPABASE_SECRET_KEY:'sb_publishable_not_a_secret'}]) {
     const response=await createNetlifyHandler({env,fetchImpl})(new Request('https://racker.example/health'),{ip:'127.0.0.1'});
-    assert.equal(response.status,503);assert.equal((await response.json()).code,'CONFIGURATION_REQUIRED');
+    assert.equal(response.status,503);
+    const data=await response.json();
+    assert.equal(data.code,'CONFIGURATION_REQUIRED');
+    assert.ok(data.fields.includes('SUPABASE_SECRET_KEY'));
+    if(!env.ADMIN_PASSWORD)assert.ok(data.fields.includes('ADMIN_PASSWORD'));
+    assert.ok(!JSON.stringify(data).includes('sb_publishable_not_a_secret'));
   }
   assert.equal(calls,0);
 });

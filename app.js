@@ -39,8 +39,13 @@ async function api(route, method='GET', body) {
   catch { throw new Error('Não foi possível conectar ao servidor Racker. Confira se ele está iniciado e se este é o endereço correto.'); }
   if(!response.headers.get('content-type')?.includes('application/json')) throw new Error('Este endereço não está servindo a API Racker. O Live Server e o arquivo index.html não substituem o servidor do painel.');
   const value = await response.json();
-  if (!response.ok) { if(response.status===401 && route!=='/api/login'){authenticated=false;renderLogin();} const error=new Error(value.error || 'Não foi possível concluir.');error.status=response.status;throw error; }
+  if (!response.ok) { if(response.status===401 && route!=='/api/login'){authenticated=false;renderLogin();} const error=new Error(value.error || 'Não foi possível concluir.');error.status=response.status;error.code=value.code;error.fields=Array.isArray(value.fields)?value.fields:[];throw error; }
   return value;
+}
+function renderSetupRequired(fields) {
+  const descriptions={ADMIN_PASSWORD:'A senha que você vai digitar para entrar no painel Racker, com 12 a 256 caracteres.',SUPABASE_URL:'A Project URL do seu projeto Supabase.',SUPABASE_SECRET_KEY:'A chave secreta do projeto Supabase, disponível somente para o servidor.'};
+  const required=[...new Set(fields)].filter(name=>typeof name==='string'&&Object.hasOwn(descriptions,name));
+  $('#app').innerHTML=`<main class="startup"><a class="brand" href="/">${icon('activity')}racker<span>.</span></a><h1>Falta conectar o painel ao Supabase.</h1><p>Executar o SQL prepara o banco. Agora configure o acesso do servidor para entrar no painel e receber os envios do Android.</p>${required.length?`<h2>Configurações pendentes</h2><dl class="setup-fields">${required.map(name=>`<div><dt>${escape(name)}</dt><dd>${descriptions[name]}</dd></div>`).join('')}</dl>`:''}<ol class="steps"><li>No Netlify, abra o projeto e entre em <strong>Project configuration → Environment variables</strong>.</li><li>Configure os campos acima para <strong>Functions</strong> no ambiente de produção. Escolha uma senha própria para o painel.</li><li>Faça um novo deploy e volte aqui para verificar.</li></ol><div class="info-box">A chave secreta fica no ambiente privado do servidor. Ela não deve ser colocada no HTML, no aplicativo Android ou no Git.</div><div class="setup-actions"><a class="btn" href="https://app.netlify.com/" target="_blank" rel="noopener noreferrer">Abrir Netlify ${icon('arrow')}</a><button class="btn primary" data-action="retry">Já configurei, verificar ${icon('refresh')}</button></div></main>`;
 }
 function renderConnectionError(message) {
   const local = location.protocol==='file:' || ['localhost','127.0.0.1','[::1]'].includes(location.hostname);
@@ -116,10 +121,10 @@ document.addEventListener('click',async e=>{
       case 'refresh':if(demo)devices=sampleDevices();await refresh();toast(demo?'Demonstração reiniciada.':'Painel atualizado. O próximo envio depende do Android.');break;
       case 'logout':if(!demo)await api('/api/logout','POST',{});authenticated=false;if(document.body.dataset.demo==='true'){devices=sampleDevices();view='overview';render();toast('Você está na prévia. Nenhuma sessão real foi iniciada.');}else{demo=false;devices=[];renderLogin();}break;
     }
-  }catch(err){toast(err.message);}
+  }catch(err){if(err.code==='CONFIGURATION_REQUIRED')renderSetupRequired(err.fields);else toast(err.message);}
 });
 $('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))$('#modal').close();});
 if(demo){devices=sampleDevices();render();}
 else if(location.protocol==='file:'){renderConnectionError('Você abriu o arquivo HTML diretamente. Use o endereço do servidor para entrar e conectar seu Android.');}
-else{refresh().catch(error=>{if(error.status!==401)renderConnectionError(error.message);});}
-setInterval(()=>{if(authenticated&&!demo&&!document.hidden)refresh().catch(err=>toast(err.message));},15000);
+else{refresh().catch(error=>{if(error.code==='CONFIGURATION_REQUIRED')renderSetupRequired(error.fields);else if(error.status!==401)renderConnectionError(error.message);});}
+setInterval(()=>{if(authenticated&&!demo&&!document.hidden)refresh().catch(err=>{if(err.code==='CONFIGURATION_REQUIRED')renderSetupRequired(err.fields);else toast(err.message);});},15000);

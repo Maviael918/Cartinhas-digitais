@@ -86,6 +86,8 @@ No desenvolvimento em rede local, o telefone precisa alcançar o IP privado do c
 
 O modo local usa `data/devices.json`, ignorado pelo Git e sem criptografia adicional em disco. O modo Supabase persiste também sessões e códigos de pareamento. Tokens do servidor são armazenados como hash. No Android, o token fica nas preferências privadas do app; backups desses dados são desativados no manifesto.
 
+No computador, o modo `auto` seleciona Supabase assim que a chave privada é configurada no ambiente ou em `.env`. Para exigir Supabase, use `RACKER_STORAGE=supabase`. As funções do Netlify usam sempre Supabase e mostram as configurações pendentes quando falta a chave ou a senha do painel.
+
 O app não coleta mensagens, chamadas, fotos, áudio, câmera, senhas ou o conteúdo de outros apps. Não usa acessibilidade, administrador do dispositivo, leitura de notificações, SMS ou localização em segundo plano.
 
 ## Validação

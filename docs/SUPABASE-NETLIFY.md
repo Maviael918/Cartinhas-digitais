@@ -76,7 +76,11 @@ O banco online não importa automaticamente aparelhos ou dados do arquivo local.
 
 ## Desenvolvimento local
 
-O padrão de `npm start` é o arquivo local. Para usar Supabase, copie `.env.example` para `.env`, configure os valores e defina `RACKER_STORAGE=supabase`. O servidor carrega `.env` ao iniciar. Não configure `HOST`, `PORT`, `TLS_CERT` ou `TLS_KEY` nas Functions; o Netlify fornece a entrada HTTPS.
+O servidor usa `RACKER_STORAGE=auto` por padrão: com `SUPABASE_SECRET_KEY` ou `SUPABASE_SERVICE_ROLE_KEY` configurada, seleciona Supabase; sem chave, usa o arquivo local de desenvolvimento. Para exigir o banco remoto, defina `RACKER_STORAGE=supabase`. Para desenvolvimento explicitamente local, use `RACKER_STORAGE=local`.
+
+Copie `.env.example` para `.env` se precisar configurar a instância no computador. O servidor carrega esse arquivo ao iniciar. No Netlify, configure as variáveis diretamente no ambiente privado de Functions; o arquivo `.env` não é enviado ao Git. Não configure `HOST`, `PORT`, `TLS_CERT` ou `TLS_KEY` nas Functions; o Netlify fornece a entrada HTTPS.
+
+Se faltar a senha do painel ou a chave do banco, o painel mostra uma tela de configuração com os nomes dos campos pendentes. Os valores privados não são retornados pela API. Depois de salvar as variáveis e realizar um novo deploy, use **Já configurei, verificar** para entrar no painel.
 
 Os testes usam PostgreSQL local via PGlite e não alteram o banco remoto. A publicação e o teste do projeto remoto dependem da autenticação no provedor e da configuração das variáveis privadas.
 
