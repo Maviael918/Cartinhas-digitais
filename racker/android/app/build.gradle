@@ -1,0 +1,32 @@
+plugins { id 'com.android.application' }
+
+def deploymentFile = new File(rootProject.projectDir, '../../config/deployment.json')
+def serverUrl = new groovy.json.JsonSlurper().parse(deploymentFile).siteUrl.toString().replaceAll('/+$', '')
+def serverUri = new URI(serverUrl)
+if (serverUri.scheme != 'https' || !serverUri.host || serverUri.rawUserInfo || serverUri.rawQuery || serverUri.rawFragment || serverUri.rawPath) {
+    throw new GradleException('config/deployment.json: siteUrl deve ser a origem HTTPS do painel.')
+}
+
+android {
+    namespace 'br.com.racker'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'br.com.racker'
+        minSdk 30
+        targetSdk 35
+        versionCode 3
+        versionName '0.3.0'
+        buildConfigField 'String', 'RACKER_SERVER_URL', groovy.json.JsonOutput.toJson(serverUrl)
+    }
+    buildFeatures { buildConfig true }
+    buildTypes {
+        debug { manifestPlaceholders = [cleartextAllowed: 'true'] }
+        release { manifestPlaceholders = [cleartextAllowed: 'false'] }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies { implementation 'androidx.work:work-runtime:2.10.1' }

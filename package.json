@@ -1,0 +1,22 @@
+{
+  "name": "racker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Painel e app Android para acompanhamento autorizado do próprio aparelho",
+  "scripts": {
+    "start": "node --preserve-symlinks-main server.mjs",
+    "test": "node --preserve-symlinks-main --preserve-symlinks --test test/*.test.mjs",
+    "build": "node --preserve-symlinks-main scripts/build-netlify.mjs",
+    "build:demo": "node --preserve-symlinks-main scripts/build-demo.mjs",
+    "check:function": "esbuild netlify/functions/api.mjs --bundle --platform=node --format=esm --target=node22 --outfile=.netlify/validation/api.mjs",
+    "diagnostico": "node --preserve-symlinks-main --preserve-symlinks scripts/diagnose.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.15",
+    "esbuild": "0.28.2"
+  }
+}
