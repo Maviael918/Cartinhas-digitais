@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#155d36">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Meu Painel">
+  <title>Painel de estudos e finanças</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Painel de estudos e finanças">
+        <span class="brand-icon" aria-hidden="true">📚</span>
+        <span>Painel de estudos<br>e finanças</span>
+      </a>
+      <nav class="simulator-nav" aria-label="Tópicos do painel">
+        <p class="nav-heading">MEUS TÓPICOS</p>
+        <button type="button" class="nav-item" data-open-simulator="excel" aria-current="false">
+          <span class="nav-item-icon" aria-hidden="true">▦</span>
+          <span>Simulado Excel</span>
+          <span class="nav-arrow" aria-hidden="true">›</span>
+        </button>
+        <button type="button" class="nav-item" data-open-simulator="matematica" aria-current="false">
+          <span class="nav-item-icon" aria-hidden="true">÷</span>
+          <span>Simulado Matemática</span>
+          <span class="nav-arrow" aria-hidden="true">›</span>
+        </button>
+        <button type="button" class="nav-item" data-open-simulator="financas" aria-current="false">
+          <span class="nav-item-icon" aria-hidden="true">R$</span>
+          <span>Finanças</span>
+          <span class="nav-arrow" aria-hidden="true">›</span>
+        </button>
+      </nav>
+      <p class="sidebar-note">Seus limites e despesas ficam salvos neste navegador.</p>
+    </aside>
+
+    <main class="main-content">
+      <section id="dashboardView" class="dashboard-view">
+        <div class="page-heading">
+          <p class="eyebrow">ESTUDOS E ORGANIZAÇÃO</p>
+          <h1>Painel de estudos e finanças</h1>
+          <p class="intro">Escolha um simulado para estudar ou abra Finanças para organizar seus limites mensais e despesas.</p>
+        </div>
+        <div class="welcome-card">
+          <span class="welcome-icon" aria-hidden="true">📝</span>
+          <div>
+            <h2>Seus tópicos ficam aqui</h2>
+            <p>Use os simulados para estudar ou acesse <strong>Finanças</strong> no menu para definir limites por categoria e acompanhar seus gastos.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="excelSimulator" class="simulator-view" hidden>
+        <div class="page-heading">
+          <p class="eyebrow">SIMULADO • INFORMÁTICA</p>
+          <h1>Simulado Excel</h1>
+          <p class="intro">Aprenda como cada fórmula funciona com exemplos do dia a dia. Escolha um cenário e acompanhe o cálculo passo a passo.</p>
+        </div>
+
+        <section class="card">
+          <h2>1. Dados da planilha</h2>
+          <p class="section-hint">As células são como os espaços de uma tabela. Você pode alterar os valores e recalcular o exemplo.</p>
+          <div class="worksheet-tabs" aria-label="Abas da planilha">
+            <span class="worksheet-tab active">Planilha1</span>
+            <span class="worksheet-tab">+</span>
+          </div>
+          <div class="sheet-formula-bar" aria-label="Barra de fórmulas da planilha">
+            <output id="selectedCell" class="selected-cell">A1</output>
+            <span class="fx-mark" aria-hidden="true">fx</span>
+            <output id="cellFormulaDisplay" class="cell-formula-display">8</output>
+          </div>
+          <table class="excel-table">
+            <thead>
+              <tr>
+                <th class="corner-cell"></th>
+                <th scope="col">A</th>
+                <th scope="col">B</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row" class="row-number">1</th>
+                <td><input type="number" id="cellA1" value="8" aria-label="Célula A1"></td>
+                <td><input type="text" id="cellB1" value="Maçã" aria-label="Célula B1"></td>
+              </tr>
+              <tr>
+                <th scope="row" class="row-number">2</th>
+                <td><input type="number" id="cellA2" value="15" aria-label="Célula A2"></td>
+                <td><input type="text" id="cellB2" value="Banana" aria-label="Célula B2"></td>
+              </tr>
+              <tr>
+                <th scope="row" class="row-number">3</th>
+                <td><input type="number" id="cellA3" value="4" aria-label="Célula A3"></td>
+                <td><input type="text" id="cellB3" value="Laranja" aria-label="Célula B3"></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="sheet-hint">Clique em uma célula para ver seu endereço e conteúdo na barra de fórmulas.</p>
+        </section>
+
+        <section class="card">
+          <h2>2. Exemplos prontos para estudar</h2>
+          <p class="section-hint">Pense na função como uma ação conhecida: o <strong>SE</strong> decide como um porteiro; a <strong>SOMA</strong> junta itens como no caixa.</p>
+          <div class="preset-buttons" aria-label="Escolha um exemplo de fórmula">
+            <button type="button" data-preset="SE1">SE: porteiro da pontuação</button>
+            <button type="button" data-preset="SE2">SE: promoção por quantidade</button>
+            <button type="button" data-preset="SOMA">SOMA: carrinho de compras</button>
+            <button type="button" data-preset="SOMA_INTERVALO">SOMA: juntar a coluna</button>
+          </div>
+
+          <aside class="analogy-box" aria-live="polite">
+            <h3 id="analogyTitle">Comece por um exemplo</h3>
+            <p id="analogyText">Escolha um botão acima para ver a analogia, a fórmula pronta e o que cada parte faz.</p>
+          </aside>
+
+          <div class="formula-box">
+            <label for="formulaInput">Digite a fórmula:</label>
+            <div class="practice-formula-bar">
+              <span class="fx-mark" aria-hidden="true">fx</span>
+              <input type="text" id="formulaInput" value='=SE(A1 >= 10; A1 + 10; A1 * 5)'>
+            </div>
+            <button type="button" id="calculateButton">Calcular resultado</button>
+          </div>
+
+          <div class="result-box" aria-live="polite">
+            <h3>Resultado no Excel</h3>
+            <div id="resultOutput" class="display-result">-</div>
+            <h3>Passo a passo</h3>
+            <div id="stepByStepOutput" class="display-steps">Escolha um exemplo ou digite uma fórmula compatível e calcule.</div>
+          </div>
+        </section>
+
+      </section>
+
+      <section id="mathSimulator" class="simulator-view" hidden>
+        <div class="page-heading">
+          <p class="eyebrow">SIMULADO • MATEMÁTICA</p>
+          <h1>Matemática passo a passo</h1>
+          <p class="intro">Escolha uma conta, altere os números e veja como resolver no caderno: armando a soma, dividindo ou montando a regra de três.</p>
+        </div>
+
+        <section class="card">
+          <h2>Escolha o tipo de conta</h2>
+          <div class="math-mode-buttons" role="group" aria-label="Tipo de conta">
+            <button type="button" class="math-mode-button active" data-math-mode="soma" aria-pressed="true">＋ Soma armada</button>
+            <button type="button" class="math-mode-button" data-math-mode="divisao" aria-pressed="false">÷ Divisão armada</button>
+            <button type="button" class="math-mode-button" data-math-mode="regra" aria-pressed="false">↗ Regra de três</button>
+          </div>
+
+          <section class="math-panel" data-math-panel="soma">
+            <h2>Some os números</h2>
+            <p class="section-hint">Digite dois números inteiros. A conta será organizada por casas, como no caderno.</p>
+            <div class="math-input-grid two-inputs">
+              <label>Primeiro número
+                <input type="number" id="sumFirst" value="248" step="1">
+              </label>
+              <label>Segundo número
+                <input type="number" id="sumSecond" value="176" step="1">
+              </label>
+            </div>
+            <button type="button" class="math-calculate-button" id="calculateSum">Armar e somar</button>
+            <div class="math-result" id="sumResult" aria-live="polite">A soma armada aparecerá aqui.</div>
+          </section>
+
+          <section class="math-panel" data-math-panel="divisao" hidden>
+            <h2>Faça uma divisão</h2>
+            <p class="section-hint">Use números inteiros positivos. A divisão mostra cada etapa, o resto e o quociente.</p>
+            <div class="math-input-grid two-inputs">
+              <label>Dividendo (número a dividir)
+                <input type="number" id="dividend" value="847" min="0" step="1">
+              </label>
+              <label>Divisor (por quanto dividir)
+                <input type="number" id="divisor" value="7" min="1" step="1">
+              </label>
+            </div>
+            <button type="button" class="math-calculate-button" id="calculateDivision">Armar e dividir</button>
+            <div class="math-result" id="divisionResult" aria-live="polite">A divisão armada aparecerá aqui.</div>
+          </section>
+
+          <section class="math-panel" data-math-panel="regra" hidden>
+            <h2>Monte a regra de três</h2>
+            <p class="section-hint">Preencha três valores proporcionais. O valor correspondente a X será calculado pela multiplicação cruzada.</p>
+            <div class="proportion-grid" aria-label="Proporção: A corresponde a B e C corresponde a X">
+              <label>A
+                <input type="number" id="ruleA" value="3" min="0.000001" step="any">
+              </label>
+              <span class="proportion-word">corresponde a</span>
+              <label>B
+                <input type="number" id="ruleB" value="12" step="any">
+              </label>
+              <span class="proportion-break" aria-hidden="true"></span>
+              <label>C
+                <input type="number" id="ruleC" value="5" min="0" step="any">
+              </label>
+              <span class="proportion-word">corresponde a</span>
+              <label>X
+                <input type="text" value="?" readonly aria-label="Valor desconhecido X">
+              </label>
+            </div>
+            <button type="button" class="math-calculate-button" id="calculateRule">Calcular X</button>
+            <div class="math-result" id="ruleResult" aria-live="polite">A regra de três resolvida aparecerá aqui.</div>
+          </section>
+        </section>
+
+        <section class="card word-problem-card">
+          <h2>Problemas em frases</h2>
+          <p class="section-hint">Leia a situação, descubra qual conta fazer e tente responder antes de conferir. Cada problema novo muda os números.</p>
+          <div class="math-mode-buttons" role="group" aria-label="Tipo de problema">
+            <button type="button" class="math-mode-button active" data-problem-mode="soma" aria-pressed="true">Problema de soma</button>
+            <button type="button" class="math-mode-button" data-problem-mode="divisao" aria-pressed="false">Problema de divisão</button>
+            <button type="button" class="math-mode-button" data-problem-mode="regra" aria-pressed="false">Problema de regra de três</button>
+          </div>
+          <div class="word-problem-box" aria-live="polite">
+            <p id="wordProblemText">Preparando um problema...</p>
+          </div>
+          <div class="word-problem-answer">
+            <label for="wordProblemAnswer">Sua resposta
+              <input type="text" id="wordProblemAnswer" inputmode="decimal" autocomplete="off" placeholder="Digite o resultado">
+            </label>
+            <button type="button" class="math-calculate-button" id="checkWordProblem">Conferir resposta</button>
+            <button type="button" class="new-problem-button" id="newWordProblem">Novo problema</button>
+          </div>
+          <div class="math-result word-problem-feedback" id="wordProblemFeedback" aria-live="polite">Resolva o problema e confira sua resposta.</div>
+        </section>
+      </section>
+
+      <section id="financeView" class="simulator-view" hidden>
+        <div class="page-heading">
+          <p class="eyebrow">ORGANIZAÇÃO PESSOAL</p>
+          <h1>Finanças</h1>
+          <p class="intro">Defina um limite mensal para cada categoria, registre suas despesas e acompanhe quanto ainda pode gastar.</p>
+        </div>
+
+        <section class="card">
+          <h2>Sincronização segura</h2>
+          <p id="supabaseConnectionStatus" class="section-hint">Verificando a configuração do Supabase...</p>
+          <form id="authForm" class="finance-form auth-form">
+            <label for="authEmail">E-mail
+              <input type="email" id="authEmail" autocomplete="email" required placeholder="voce@exemplo.com">
+            </label>
+            <label for="authPassword">Senha
+              <input type="password" id="authPassword" autocomplete="current-password" minlength="6" required placeholder="Pelo menos 6 caracteres">
+            </label>
+            <button type="submit" class="math-calculate-button" id="signInButton">Entrar</button>
+            <button type="button" class="new-problem-button" id="signUpButton">Criar conta</button>
+            <button type="button" class="new-problem-button" id="signOutButton" hidden>Sair da conta</button>
+          </form>
+          <p id="authStatus" class="finance-status" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="card">
+          <div class="finance-month-picker">
+            <label for="financeMonth">Mês acompanhado
+              <input type="month" id="financeMonth">
+            </label>
+          </div>
+          <div class="finance-summary" aria-live="polite">
+            <article class="finance-summary-card">
+              <span>Limites do mês</span>
+              <strong id="monthlyLimitTotal">R$ 0,00</strong>
+            </article>
+            <article class="finance-summary-card">
+              <span>Total gasto</span>
+              <strong id="monthlySpentTotal">R$ 0,00</strong>
+            </article>
+            <article class="finance-summary-card">
+              <span>Saldo dos limites</span>
+              <strong id="monthlyRemainingTotal">R$ 0,00</strong>
+            </article>
+          </div>
+          <p class="section-hint finance-balance-hint">O saldo fica negativo quando os gastos ultrapassam os limites do mês.</p>
+          <p id="financeStatus" class="finance-status" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="card">
+          <h2>Limites por categoria</h2>
+          <p class="section-hint">Cadastre suas categorias e o máximo que pretende gastar por mês em cada uma.</p>
+          <form id="categoryForm" class="finance-form">
+            <label for="categoryName">Nome da categoria
+              <input type="text" id="categoryName" maxlength="50" required placeholder="Ex.: Meu carro">
+            </label>
+            <label for="categoryLimit">Limite mensal (R$)
+              <input type="number" id="categoryLimit" min="0.01" step="0.01" max="200" required placeholder="200,00">
+            </label>
+            <button type="submit" class="math-calculate-button">Adicionar categoria</button>
+          </form>
+          <p class="section-hint">A categoria “Meu carro” tem limite máximo de R$ 200,00 por mês. Combustível e manutenção usam essa mesma cota.</p>
+          <div id="budgetCategories" class="budget-categories" aria-live="polite"></div>
+        </section>
+
+        <section class="card">
+          <h2>Registrar uma despesa</h2>
+          <p class="section-hint">Cada despesa será somada ao total da categoria e do mês escolhido.</p>
+          <div class="expense-shortcuts" role="group" aria-label="Despesas rápidas do carro">
+            <button type="button" class="expense-shortcut-button" data-expense-template="Combustível">⛽ Combustível</button>
+            <button type="button" class="expense-shortcut-button" data-expense-template="Manutenção">🔧 Manutenção</button>
+            <button type="button" class="expense-shortcut-button" id="openCarInsurance">🛡️ Seguro</button>
+          </div>
+          <form id="expenseForm" class="finance-form expense-form">
+            <label for="expenseCategory">Categoria
+              <select id="expenseCategory" required>
+                <option value="">Adicione uma categoria primeiro</option>
+              </select>
+            </label>
+            <label for="expenseDescription"><span id="expenseDescriptionLabel">Descrição (opcional)</span>
+              <input type="text" id="expenseDescription" maxlength="80" placeholder="Ex.: Combustível">
+            </label>
+            <label for="expenseAmount">Valor (R$)
+              <input type="number" id="expenseAmount" min="0.01" step="0.01" required placeholder="0,00">
+            </label>
+            <label for="expenseDate">Data
+              <input type="date" id="expenseDate" required>
+            </label>
+            <button type="submit" class="math-calculate-button">Adicionar despesa</button>
+          </form>
+        </section>
+
+        <section class="card" id="carInsuranceCard">
+          <h2>Seguro do carro</h2>
+          <p class="section-hint">O seguro é apenas informativo e não é descontado da cota mensal de R$ 200,00.</p>
+          <div class="insurance-controls">
+            <label class="insurance-switch-label" for="carInsuranceInsured">
+              <span id="carInsuranceStatus">Não segurado</span>
+              <input type="checkbox" id="carInsuranceInsured" role="switch" aria-checked="false">
+              <span class="insurance-switch" aria-hidden="true"></span>
+            </label>
+            <form id="carInsuranceForm" class="insurance-value-form">
+              <label for="carInsuranceValue">Valor mensal atual do seguro (R$)
+                <input type="number" id="carInsuranceValue" min="0.01" step="0.01" required placeholder="Ex.: 180,00">
+              </label>
+              <button type="submit" class="math-calculate-button">Salvar valor</button>
+            </form>
+            <p class="insurance-current-value">Valor registrado: <strong id="carInsuranceCurrentValue">Não informado</strong></p>
+            <p id="carInsuranceMessage" class="finance-status" role="status" aria-live="polite"></p>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Despesas do mês</h2>
+          <div id="monthlyExpenses" class="monthly-expenses" aria-live="polite"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="supabase-config.js"></script>
+  <script defer src="script.js"></script>
+</body>
+</html>

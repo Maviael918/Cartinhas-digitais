@@ -1,0 +1,1305 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f0f4f8;
+  color: #333;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  max-width: 1400px;
+  min-height: calc(100vh - 40px);
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #e0e6e2;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 26px rgba(30, 55, 40, 0.08);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background: #f8faf9;
+  border-right: 1px solid #e0e6e2;
+  padding: 22px 14px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 9px 24px;
+  color: #1d603b;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.brand-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  background: #e5f1e9;
+  border-radius: 10px;
+  font-size: 1.3rem;
+}
+
+.nav-heading,
+.eyebrow {
+  color: #77847c;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.nav-heading {
+  padding: 0 10px;
+  margin-bottom: 9px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  min-height: 46px;
+  padding: 9px 11px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: #46534b;
+  cursor: pointer;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.nav-item:hover {
+  background: #edf4ef;
+}
+
+.nav-item[aria-current="page"] {
+  border-color: #d3e6d9;
+  background: #e8f3ec;
+  color: #155d36;
+  font-weight: 600;
+}
+
+.nav-item:focus-visible,
+.brand:focus-visible {
+  outline: 3px solid #f2c14e;
+  outline-offset: 2px;
+}
+
+.nav-item-icon {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 5px;
+  background: #fff;
+  color: #217346;
+  font-size: 1.1rem;
+}
+
+.nav-arrow {
+  margin-left: auto;
+  color: #78867d;
+  font-size: 1.35rem;
+}
+
+.sidebar-note {
+  margin-top: auto;
+  padding: 16px 10px 0;
+  color: #78867d;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.main-content {
+  min-width: 0;
+  padding: 32px clamp(20px, 4vw, 56px);
+  background: #fbfcfb;
+}
+
+.dashboard-view,
+.simulator-view {
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.page-heading {
+  margin-bottom: 25px;
+}
+
+.page-heading h1 {
+  margin: 7px 0 8px;
+  color: #1d603b;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  text-align: left;
+}
+
+.page-heading .intro {
+  max-width: 720px;
+  margin: 0;
+  color: #647169;
+  text-align: left;
+}
+
+.welcome-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 700px;
+  padding: 22px;
+  border: 1px solid #e0e9e3;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(30, 55, 40, 0.04);
+}
+
+.welcome-icon {
+  display: grid;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 10px;
+  background: #e8f3ec;
+  font-size: 1.4rem;
+}
+
+.welcome-card h2 {
+  margin: 0 0 8px;
+}
+
+.welcome-card p {
+  color: #58665e;
+  line-height: 1.6;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #107c41; /* Verde clássico do Excel */
+}
+
+.intro {
+  text-align: center;
+  line-height: 1.5;
+  margin: 0 auto 22px;
+  max-width: 680px;
+  color: #52615a;
+}
+
+.card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.simulator-view[hidden] {
+  display: none;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  color: #217346;
+}
+
+.section-hint {
+  color: #52615a;
+  line-height: 1.5;
+  margin: -6px 0 14px;
+}
+
+.worksheet-tabs {
+  display: flex;
+  align-items: end;
+  gap: 5px;
+  border-bottom: 1px solid #c9d1cc;
+  background: #f3f5f4;
+  padding: 8px 8px 0;
+}
+
+.worksheet-tab {
+  color: #52615a;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+}
+
+.worksheet-tab.active {
+  color: #217346;
+  background: #fff;
+  border: 1px solid #c9d1cc;
+  border-bottom: 2px solid #217346;
+  font-weight: 600;
+}
+
+.sheet-formula-bar {
+  display: grid;
+  grid-template-columns: 72px 42px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  padding: 9px;
+  border: 1px solid #c9d1cc;
+  border-top: 0;
+}
+
+.selected-cell,
+.cell-formula-display {
+  min-width: 0;
+  min-height: 34px;
+  padding: 7px 9px;
+  border: 1px solid #c9d1cc;
+  background: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selected-cell {
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.fx-mark {
+  color: #64736a;
+  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  text-align: center;
+}
+
+.excel-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border: 1px solid #c9d1cc;
+}
+
+.excel-table th, .excel-table td {
+  height: 42px;
+  border: 1px solid #d7ddda;
+  text-align: center;
+}
+
+.excel-table th {
+  background-color: #f0f2f1;
+  color: #47534c;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.excel-table .corner-cell,
+.excel-table .row-number {
+  width: 48px;
+}
+
+.excel-table .corner-cell {
+  background: #e6eae8;
+}
+
+.excel-table input {
+  display: block;
+  width: 100%;
+  height: 41px;
+  padding: 8px 12px;
+  text-align: left;
+  border: 0;
+  border-radius: 0;
+  background: #fff;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.excel-table input[type="number"] {
+  text-align: right;
+}
+
+.excel-table td:focus-within {
+  outline: 2px solid #217346;
+  outline-offset: -2px;
+}
+
+.sheet-hint {
+  color: #68756e;
+  font-size: 0.85rem;
+  margin-top: 8px;
+}
+
+.preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.preset-buttons button {
+  background-color: #e8f3ec;
+  border: 1px solid #c5dfce;
+  color: #155d36;
+  padding: 9px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  min-height: 42px;
+}
+
+.preset-buttons button:hover {
+  background-color: #d7eadf;
+}
+
+.preset-buttons button:focus-visible,
+.formula-box button:focus-visible,
+.formula-box input:focus-visible,
+.excel-table input:focus-visible {
+  outline: 3px solid #f2c14e;
+  outline-offset: 2px;
+}
+
+.analogy-box {
+  background: #fff9e8;
+  border-left: 5px solid #e6b83f;
+  border-radius: 4px;
+  padding: 14px;
+  margin-bottom: 18px;
+}
+
+.analogy-box h3 {
+  color: #70540b;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.analogy-box p {
+  color: #514a35;
+  line-height: 1.5;
+}
+
+.formula-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.formula-box input {
+  min-width: 0;
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: 0;
+  border-left: 1px solid #c9d1cc;
+  border-radius: 0;
+  font-family: monospace;
+}
+
+.practice-formula-bar {
+  display: flex;
+  align-items: center;
+  min-height: 42px;
+  border: 1px solid #aeb9b2;
+  background: #fff;
+}
+
+.practice-formula-bar .fx-mark {
+  min-width: 42px;
+}
+
+.formula-box button {
+  background-color: #107c41;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.formula-box button:hover {
+  background-color: #0b5c30;
+}
+
+.result-box {
+  background: #f9f9f9;
+  padding: 15px;
+  border-left: 5px solid #107c41;
+  border-radius: 4px;
+}
+
+.display-result {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #107c41;
+  margin-bottom: 15px;
+}
+
+.display-steps {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #444;
+  white-space: pre-line;
+}
+
+.math-mode-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 20px;
+}
+
+.math-mode-button {
+  min-height: 42px;
+  padding: 9px 13px;
+  border: 1px solid #c5dfce;
+  border-radius: 6px;
+  background: #f5f8f6;
+  color: #155d36;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.math-mode-button:hover,
+.math-mode-button.active {
+  border-color: #217346;
+  background: #e8f3ec;
+}
+
+.math-mode-button:focus-visible,
+.math-calculate-button:focus-visible,
+.math-input-grid input:focus-visible,
+.proportion-grid input:focus-visible {
+  outline: 3px solid #f2c14e;
+  outline-offset: 2px;
+}
+
+.math-panel {
+  padding-top: 18px;
+  border-top: 1px solid #e0e6e2;
+}
+
+.math-panel[hidden] {
+  display: none;
+}
+
+.math-input-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 620px;
+  margin: 16px 0;
+}
+
+.math-input-grid label,
+.proportion-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #46534b;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.math-input-grid input,
+.proportion-grid input {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 10px;
+  border: 1px solid #aeb9b2;
+  border-radius: 5px;
+  background: #fff;
+  color: #333;
+  font-size: 1rem;
+}
+
+.math-calculate-button {
+  min-height: 42px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 5px;
+  background: #107c41;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.math-calculate-button:hover {
+  background: #0b5c30;
+}
+
+.math-result {
+  margin-top: 18px;
+  padding: 16px;
+  border-left: 5px solid #107c41;
+  border-radius: 5px;
+  background: #f5f8f6;
+  color: #34443a;
+  line-height: 1.6;
+}
+
+.math-result h3 {
+  margin-bottom: 8px;
+  color: #155d36;
+  font-size: 1rem;
+}
+
+.math-error {
+  border-left-color: #bb3d32;
+  color: #84271f;
+}
+
+.sum-work,
+.division-work {
+  width: fit-content;
+  max-width: 100%;
+  margin: 12px auto;
+  padding: 12px 18px;
+  border-radius: 6px;
+  background: #fff;
+  color: #1d3526;
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: clamp(1.05rem, 4vw, 1.35rem);
+  line-height: 1.55;
+  white-space: pre;
+}
+
+.division-work {
+  overflow-x: auto;
+  text-align: left;
+}
+
+.sum-carry {
+  color: #b27600;
+}
+
+.sum-answer,
+.division-answer {
+  border-top: 2px solid #217346;
+  font-weight: 700;
+}
+
+.math-steps,
+.division-steps,
+.rule-steps {
+  margin-top: 12px;
+  padding-left: 22px;
+}
+
+.math-steps li,
+.division-steps li,
+.rule-steps li {
+  margin: 5px 0;
+}
+
+.proportion-grid {
+  display: grid;
+  grid-template-columns: minmax(55px, 1fr) auto minmax(55px, 1fr);
+  align-items: end;
+  gap: 12px;
+  max-width: 570px;
+  margin: 18px 0;
+}
+
+.proportion-word {
+  padding-bottom: 11px;
+  color: #68756e;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.proportion-break {
+  grid-column: 1 / -1;
+  height: 1px;
+  margin: 1px 0;
+  background: #d7ddda;
+}
+
+.proportion-grid input[readonly] {
+  background: #f0f4f1;
+  font-weight: 700;
+}
+
+.word-problem-card {
+  margin-top: 20px;
+}
+
+.word-problem-box {
+  padding: 18px;
+  border: 1px solid #d5e5da;
+  border-radius: 7px;
+  background: #f5faf6;
+  color: #284b35;
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.65;
+}
+
+.word-problem-answer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.word-problem-answer label {
+  display: flex;
+  flex: 1 1 180px;
+  flex-direction: column;
+  gap: 6px;
+  color: #46534b;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.word-problem-answer input {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 10px;
+  border: 1px solid #aeb9b2;
+  border-radius: 5px;
+  background: #fff;
+  color: #333;
+  font-size: 1rem;
+}
+
+.word-problem-answer input:focus-visible,
+.new-problem-button:focus-visible {
+  outline: 3px solid #f2c14e;
+  outline-offset: 2px;
+}
+
+.new-problem-button {
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid #c5dfce;
+  border-radius: 5px;
+  background: #fff;
+  color: #155d36;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.new-problem-button:hover {
+  background: #e8f3ec;
+}
+
+.word-problem-feedback h3 {
+  margin-bottom: 7px;
+}
+
+.word-problem-feedback p + p {
+  margin-top: 6px;
+}
+
+.finance-month-picker {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 18px;
+}
+
+.finance-month-picker label,
+.finance-form label,
+.budget-limit-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #46534b;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.finance-month-picker input,
+.finance-form input,
+.finance-form select,
+.budget-limit-form input {
+  min-height: 42px;
+  padding: 8px 10px;
+  border: 1px solid #aeb9b2;
+  border-radius: 5px;
+  background: #fff;
+  color: #333;
+  font: inherit;
+}
+
+.finance-month-picker input:focus-visible,
+.finance-form input:focus-visible,
+.finance-form select:focus-visible,
+.budget-limit-form input:focus-visible,
+.budget-update-button:focus-visible,
+.expense-delete-button:focus-visible {
+  outline: 3px solid #f2c14e;
+  outline-offset: 2px;
+}
+
+.finance-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.finance-summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid #e0e9e3;
+  border-radius: 7px;
+  background: #f8faf9;
+  color: #58665e;
+  font-size: 0.9rem;
+}
+
+.finance-summary-card strong {
+  color: #155d36;
+  font-size: 1.2rem;
+}
+
+.finance-summary-card strong.finance-negative-balance {
+  color: #a33128;
+}
+
+.expense-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.expense-shortcut-button {
+  min-height: 42px;
+  padding: 9px 14px;
+  border: 1px solid #c5dfce;
+  border-radius: 6px;
+  background: #e8f3ec;
+  color: #155d36;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.expense-shortcut-button:hover {
+  background: #d7eadf;
+}
+
+.expense-shortcut-button:focus-visible {
+  outline: 3px solid #f2c14e;
+  outline-offset: 2px;
+}
+
+.insurance-controls {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.7fr) minmax(260px, 1.3fr);
+  align-items: end;
+  gap: 16px;
+}
+
+.insurance-switch-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  color: #34443a;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.insurance-switch-label input {
+  position: absolute;
+  right: 0;
+  width: 52px;
+  height: 30px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.insurance-switch {
+  position: relative;
+  width: 52px;
+  height: 30px;
+  flex: 0 0 52px;
+  border-radius: 99px;
+  background: #8a9690;
+  transition: background-color 150ms ease;
+}
+
+.insurance-switch::after {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24);
+  content: "";
+  transition: transform 150ms ease;
+}
+
+.insurance-switch-label input:checked + .insurance-switch {
+  background: #217346;
+}
+
+.insurance-switch-label input:checked + .insurance-switch::after {
+  transform: translateX(22px);
+}
+
+.insurance-switch-label input:focus-visible + .insurance-switch {
+  outline: 3px solid #f2c14e;
+  outline-offset: 3px;
+}
+
+.insurance-value-form {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+}
+
+.insurance-value-form label {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  color: #46534b;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.insurance-value-form input {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 10px;
+  border: 1px solid #aeb9b2;
+  border-radius: 5px;
+  background: #fff;
+  color: #333;
+  font: inherit;
+}
+
+.insurance-value-form input:focus-visible {
+  outline: 3px solid #f2c14e;
+  outline-offset: 2px;
+}
+
+.insurance-current-value {
+  grid-column: 1 / -1;
+  color: #58665e;
+}
+
+.insurance-current-value strong {
+  color: #155d36;
+}
+
+.finance-status {
+  min-height: 1.25em;
+  margin-top: 12px;
+  color: #155d36;
+  font-size: 0.9rem;
+}
+
+.finance-status-error,
+.budget-over-text {
+  color: #a33128 !important;
+}
+
+.finance-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(140px, 0.6fr) auto;
+  align-items: end;
+  gap: 12px;
+  margin: 16px 0 20px;
+}
+
+.expense-form {
+  grid-template-columns: minmax(140px, 1fr) minmax(140px, 1fr) minmax(110px, 0.7fr) minmax(140px, 0.8fr) auto;
+}
+
+.finance-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.auth-form-signed-in label,
+.auth-form-signed-in #signInButton,
+.auth-form-signed-in #signUpButton {
+  display: none;
+}
+
+.auth-form #signOutButton[hidden] {
+  display: none;
+}
+
+.budget-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.budget-card {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #dfe8e2;
+  border-radius: 7px;
+  background: #fff;
+}
+
+.budget-card-over {
+  border-color: #e9c2bd;
+  background: #fffafa;
+}
+
+.budget-card-heading,
+.budget-card-summary,
+.expense-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.budget-card-heading {
+  margin-bottom: 12px;
+}
+
+.budget-card-heading h3 {
+  overflow-wrap: anywhere;
+  color: #155d36;
+  font-size: 1rem;
+}
+
+.budget-limit {
+  flex: 0 0 auto;
+  color: #647169;
+  font-size: 0.85rem;
+}
+
+.budget-progress {
+  height: 9px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: #e8eee9;
+}
+
+.budget-progress-bar {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #27814d;
+}
+
+.budget-card-over .budget-progress-bar {
+  background: #c4493d;
+}
+
+.budget-card-summary {
+  align-items: flex-start;
+  margin-top: 10px;
+  color: #58665e;
+  font-size: 0.88rem;
+}
+
+.budget-card-summary strong {
+  text-align: right;
+}
+
+.budget-limit-form {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.budget-limit-form label {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.8rem;
+}
+
+.budget-limit-form input {
+  width: 100%;
+}
+
+.budget-update-button,
+.expense-delete-button {
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid #c5dfce;
+  border-radius: 5px;
+  background: #f5f8f6;
+  color: #155d36;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.budget-update-button:hover,
+.expense-delete-button:hover {
+  background: #e8f3ec;
+}
+
+.finance-empty {
+  padding: 14px;
+  border-radius: 6px;
+  background: #f5f8f6;
+  color: #68756e;
+}
+
+.monthly-expenses {
+  overflow-x: auto;
+}
+
+.expense-list {
+  list-style: none;
+}
+
+.expense-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #e5ebe7;
+}
+
+.expense-item:first-child {
+  padding-top: 0;
+}
+
+.expense-details {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.expense-details strong {
+  overflow-wrap: anywhere;
+  color: #34443a;
+}
+
+.expense-details span {
+  color: #68756e;
+  font-size: 0.85rem;
+}
+
+.expense-value {
+  flex: 0 0 auto;
+  color: #34443a;
+}
+
+@media (max-width: 600px) {
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 0;
+  }
+
+  .app-shell {
+    display: block;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .sidebar {
+    position: fixed;
+    z-index: 10;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    min-height: 62px;
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+    border: 0;
+    border-top: 1px solid #dfe8e2;
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 -4px 16px rgba(30, 55, 40, 0.08);
+    backdrop-filter: blur(12px);
+  }
+
+  .brand {
+    display: none;
+  }
+
+  .nav-heading {
+    display: none;
+  }
+
+  .simulator-nav {
+    display: flex;
+    width: 100%;
+    gap: 6px;
+  }
+
+  .nav-item {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    min-height: 50px;
+    padding: 3px 2px;
+    font-size: 0.68rem;
+    text-align: center;
+  }
+
+  .nav-item-icon {
+    width: 25px;
+    height: 25px;
+    font-size: 1rem;
+  }
+
+  .nav-arrow {
+    display: none;
+  }
+
+  .sidebar-note {
+    display: none;
+  }
+
+  .main-content {
+    padding: 22px 14px calc(90px + env(safe-area-inset-bottom));
+  }
+
+  .page-heading {
+    margin-bottom: 18px;
+  }
+
+  .page-heading h1 {
+    font-size: 1.65rem;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .excel-table th,
+  .excel-table td {
+    padding: 0;
+  }
+
+  .excel-table .corner-cell,
+  .excel-table .row-number {
+    width: 36px;
+  }
+
+  .excel-table input {
+    padding: 7px;
+  }
+
+  .sheet-formula-bar {
+    grid-template-columns: 58px 30px minmax(0, 1fr);
+    gap: 5px;
+    padding: 6px;
+  }
+
+  .math-input-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .proportion-grid {
+    grid-template-columns: minmax(45px, 1fr) auto minmax(45px, 1fr);
+    gap: 8px;
+  }
+
+  .proportion-word {
+    max-width: 74px;
+    font-size: 0.75rem;
+  }
+
+  .word-problem-answer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .finance-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .finance-month-picker {
+    justify-content: stretch;
+  }
+
+  .finance-month-picker label,
+  .finance-month-picker input {
+    width: 100%;
+  }
+
+  .finance-form,
+  .expense-form {
+    grid-template-columns: 1fr;
+  }
+
+  .expense-shortcuts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .expense-shortcut-button {
+    padding-inline: 8px;
+  }
+
+  .insurance-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .insurance-value-form {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .insurance-value-form button {
+    width: 100%;
+  }
+
+  .insurance-current-value {
+    grid-column: auto;
+  }
+
+  .auth-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .auth-form label {
+    grid-column: 1 / -1;
+  }
+
+  .auth-form button {
+    min-width: 0;
+    padding-inline: 8px;
+  }
+
+  .budget-categories {
+    grid-template-columns: 1fr;
+  }
+
+  .expense-item {
+    flex-wrap: wrap;
+  }
+}
+
+@media (display-mode: standalone) {
+  body {
+    padding-top: env(safe-area-inset-top);
+  }
+}
